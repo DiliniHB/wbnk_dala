@@ -1,0 +1,31 @@
+sudo pip install django-tastypie
+
+
+shell test -----
+import django
+import yaml
+import base_line.views as view1
+view1.bs_save_hs_data()
+
+import yaml
+import base_line.views as view1
+view1.bs_save_edit_data()
+
+
+IncidentReport.objects.extra(select={'offset': 'reported_date_time - now()'}).order_by('offset').values('id')
+
+IncidentReport.objects.extra(select={'offset': 'reported_date_time - now()'}).order_by('offset').values('id')
+
+// json serialized data 
+bs_data = BhsPlc.objects.filter(bs_date=bs_date)
+serialized_data = serializers.serialize('json', bs_data)
+
+return HttpResponse((serialized_data), content_type="application/json")
+
+
+dictionary get wrong order after serialized is due to
+list 
+when gives tuples and make it ordered dictionary and json.dumps
+
+dhs = [('com_disease', 'Diarrhea'), ('male', 5), ('female', 5), ('children', 5),('elderly', 8)]
+json.dumps(OrderedDict(dhs))

@@ -1,0 +1,331 @@
+{% extends "dashboard/base.html" %}
+{% block content %}
+<!-- Main content -->
+<main class="main" ng-app="dlHealthSectorDistrictApp" ng-controller="DlHealthSectorDistrictController">
+
+    <!-- Breadcrumb -->
+    <ol class="breadcrumb">
+
+        <li class="breadcrumb-item"><a href="#">Admin</a>
+        </li>
+        <li class="breadcrumb-item"><a href="#">Health Sector</a>
+        </li>
+
+        <li class="breadcrumb-item active"><span class="label label-success" style="font-size:14px;">Table 8: Summary of Damages and Losses in the Health sector in a District</span>
+        </li>
+
+    </ol>
+
+
+    <div class="container-fluid">
+
+
+        <div>
+            <ul class='nav nav-wizard'>
+                <li class="active"><a href='#step1' data-toggle="tab">1 Public Sector</a></li>
+                <li><a href='#step2' data-toggle="tab">2 Private Sector</a></li>
+                <li><a href='#step3' data-toggle="tab">3 Total Damages and Losses</a></li>
+
+
+            </ul>
+
+            <div id="myTabContent" class="tab-content">
+                <div class="tab-pane active" id="step1">
+                    <table class="table table-bordered" style="width:98.3%;background:#E4E5E6;">
+                        <colgroup>
+                            <col width="264"/>
+                            <col width="98" span="7"/>
+                        </colgroup>
+                        <tbody>
+                        <tr class="trhead">
+                            <td style="padding-left:5px;"> Name of District</td>
+
+                            <td colspan="7" style="background:#EFEFEF;">
+                                <select id="selectbasic" name="selectbasic" ng-model="$scope.district"
+                                        class="form-control" style="width:50%;font-weight:400;">
+                                    <option value="" selected="true">Select a District</option>
+                                    {% for district in districts %}
+                                    <option value={{district.id}}>{{district.name}}
+                                        {% endfor %}
+                                </select>
+                            </td>
+                            <td colspan="3" style="padding-right:5px;text-align:right;">
+                                Disaster Type
+                            </td>
+                            <td colspan="6" style="background:#EFEFEF;">
+                                <select id="select" name="selectbasic" class="form-control"
+                                        style="width:100%;font-weight:400;">
+                                    <option value="1">Option one</option>
+                                    <option value="2">Option two</option>
+                                </select>
+                            </td>
+                        </tr>
+
+                        <tr height="20" class="trheadc">
+                            <td rowspan="2" width="264" height="40" style="text-align:left;padding-left:5px;">
+                                Facilities and Assets
+                            </td>
+                            <td rowspan="2" width="98">
+                                Total Number Affected
+                            </td>
+                            <td colspan="2" width="196" style="text-align:center;">
+                                Total Number of Patients Affected
+                            </td>
+                            <td rowspan="2" width="98">
+                                Total Damages (LKR)
+                            </td>
+                            <td colspan="2" width="196" style="text-align:center;">
+                                Losses (LKR)
+                            </td>
+                            <td rowspan="2" width="98">
+                                Total Losses (LKR)
+                            </td>
+                        </tr>
+                        <tr height="20" class="trsubc">
+                            <td width="98" height="20">
+                                Male
+                            </td>
+                            <td width="98">
+                                Female
+                            </td>
+                            <td width="98">
+                                Year 1
+                            </td>
+                            <td width="98">
+                                Year 2
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div style="height:400px;overflow:auto;">
+                        <table class="table table-bordered">
+                            <tr height="20" class="trhead">
+                                <td width="264" height="20" style="padding-left:5px;">
+                                    Line Ministry Health System
+                                </td>
+                                <td width="98">
+                                </td>
+                                <td width="98">
+                                </td>
+                                <td width="98">
+                                </td>
+                                <td width="98">
+                                </td>
+                                <td width="98">
+                                </td>
+                                <td width="98">
+                                </td>
+                                <td width="98">
+                                </td>
+                            </tr>
+                            <tr height="20" class="trheadc">
+                                <td width="264" height="20">
+                                    Teaching Hospitals
+                                </td>
+                                <td width="98">
+                                </td>
+                                <td width="98">
+                                </td>
+                                <td width="98">
+                                </td>
+                                <td width="98">
+                                </td>
+                                <td width="98">
+                                </td>
+                                <td width="98">
+                                </td>
+                                <td width="98">
+                                </td>
+                            </tr>
+                            <tr ng-repeat="dshPubTh in dlhealthsectordistrict.Table_8.DshPubTh" height="20">
+
+                                <td ng-bind="dshPubTh.facilities_assets" ng-if="dshPubTh.facilities_assets=='Total'" width="264" height="20" class="boldash">
+
+                                </td>
+                                <td ng-bind="dshPubTh.facilities_assets" ng-if="dshPubTh.facilities_assets!='Total'" width="264" height="20" class="tdpa">
+
+                                </td>
+                                <td ng-repeat="(key, value) in dshPubTh" ng-if="$index > 0" width="98">
+                                    <input id="textinput" ng-model="dshPubTh[key]" name="textinput" type="text" placeholder=""
+                                           class="form-control input-md">
+                                </td>
+
+                            </tr>
+                            <tr height="20" class="trheadc">
+                                <td width="264" height="20">
+                                    Other Medical Facilities
+                                </td>
+                                <td width="98">
+                                </td>
+                                <td width="98">
+                                </td>
+                                <td width="98">
+                                </td>
+                                <td width="98">
+                                </td>
+                                <td width="98">
+                                </td>
+                                <td width="98">
+                                </td>
+                                <td width="98">
+                                </td>
+                            </tr>
+                              <tr ng-repeat="dshPubOmc in dlhealthsectordistrict.Table_8.DshPubOmc" height="20">
+
+                                <td ng-bind="dshPubOmc.facilities_assets" ng-if="dshPubOmc.facilities_assets=='Total' || dshPubOmc.facilities_assets=='TOTAL' " width="264" height="20" class="boldash">
+
+                                </td>
+                                <td ng-bind="dshPubOmc.facilities_assets" ng-if="dshPubOmc.facilities_assets!='Total' && dshPubOmc.facilities_assets!='TOTAL'" width="264" height="20" class="tdpa">
+
+                                </td>
+                                <td ng-repeat="(key, value) in dshPubOmc" ng-if="$index > 0" width="98">
+                                    <input id="textinput" ng-model="dshPubOmc[key]" name="textinput" type="text" placeholder=""
+                                           class="form-control input-md">
+                                </td>
+
+                            </tr>
+
+
+                        </table>
+                        <br>
+                        <a href='#step2' data-toggle="tab" class="btn btn-sm btn-info pull-right"> Fill Private Sector
+                            Informations</a>
+                    </div>
+                </div>
+
+
+                <div class="tab-pane" id="step2" style="height:350px;">
+                    <table class="table table-bordered" style="width:98.3%;">
+                        <colgroup>
+                            <col width="202"/>
+                            <col width="90" span="7"/>
+                        </colgroup>
+                        <tbody>
+
+                        <tr height="20" class="trheadc">
+                            <td rowspan="2" width="264" height="40" style="text-align:left;padding-left:5px;">
+                                Facilities and Assets
+                            </td>
+                            <td rowspan="2" width="98">
+                                Total Number Affected
+                            </td>
+                            <td colspan="2" width="196" style="text-align:center;">
+                                Total Number of Patients Affected
+                            </td>
+                            <td rowspan="2" width="98">
+                                Total Damages (LKR)
+                            </td>
+                            <td colspan="2" width="196" style="text-align:center;">
+                                Losses (LKR)
+                            </td>
+                            <td rowspan="2" width="98">
+                                Total Losses (LKR)
+                            </td>
+                        </tr>
+                        <tr height="20" class="trsubc">
+                            <td width="98" height="20">
+                                Male
+                            </td>
+                            <td width="98">
+                                Female
+                            </td>
+                            <td width="98">
+                                Year 1
+                            </td>
+                            <td width="98">
+                                Year 2
+                            </td>
+                        </tr>
+                        <tr ng-repeat="dshPvtFa in dlhealthsectordistrict.Table_8.DshPvtFa" height="20">
+
+                                <td ng-bind="dshPvtFa.facilities_assets" ng-if="dshPvtFa.facilities_assets=='TOTAL' " width="264" height="20" class="boldash">
+
+                                </td>
+                                <td ng-bind="dshPvtFa.facilities_assets" ng-if="dshPvtFa.facilities_assets!='TOTAL'" width="264" height="20" class="tdpa">
+
+                                </td>
+                                <td ng-repeat="(key, value) in dshPvtFa" ng-if="$index > 0" width="98">
+                                    <input id="textinput" ng-model="dshPvtFa[key]" name="textinput" type="text" placeholder=""
+                                           class="form-control input-md">
+                                </td>
+
+                            </tr>
+
+
+                        </tbody>
+                    </table>
+                    <br>
+                    <a href="#step3" id="3" class="btn btn-sm btn-info pull-right" data-toggle="tab"><span
+                            class="glyphicon glyphicon-arrow-right"></span> Fill Total Damages and Losses
+                        Informations</a>
+
+                </div>
+
+
+                <div class="tab-pane" id="step3" style="height:350px;">
+                    <table class="table table-bordered" style="width:98.3%;">
+                        <colgroup>
+                            <col width="202"/>
+                            <col width="90" span="7"/>
+                        </colgroup>
+                        <tbody>
+
+
+                        <tr height="20" class="trheadc">
+                            <td rowspan="2" width="264" height="40" style="text-align:left;padding-left:5px;">
+                                Ownership
+                            </td>
+                            <td colspan="2" rowspan="2" width="196">
+                                Damages (LKR)
+                            </td>
+                            <td colspan="4" width="392" style="text-align:center;">
+                                Losses (LKR)
+                            </td>
+                            <td rowspan="2" width="98">
+                                Total (LKR)
+                            </td>
+                        </tr>
+                        <tr height="20" class="trsubc">
+                            <td colspan="2" width="196" height="20">
+                                Year 1
+                            </td>
+                            <td colspan="2" width="196">
+                                Year 2
+                            </td>
+                        </tr>
+                        <tr ng-repeat="dshTdlOwship in dlhealthsectordistrict.Table_8.DshTdlOwship" height="20">
+
+                                <td ng-bind="dshTdlOwship.ownership" ng-if="dshTdlOwship.ownership=='TOTAL' " width="264" height="20" class="boldash">
+
+                                </td>
+                                <td ng-bind="dshTdlOwship.ownership" ng-if="dshTdlOwship.ownership!='TOTAL'" width="264" height="20" class="tdpa">
+
+                                </td>
+                                <td ng-repeat="(key, value) in dshTdlOwship" ng-if="$index > 0" width="98">
+                                    <input id="textinput" ng-model="dshTdlOwship[key]" name="textinput" type="text" placeholder=""
+                                           class="form-control input-md">
+                                </td>
+
+                            </tr>
+
+                        </tbody>
+                    </table>
+                    <div class="pull-right" style="margin-right:15px;">
+                        <br>
+                        <button type="button" class="btn btn-info">Clear</button>
+                        <button type="button" class="btn btn-success" ng-click="SaveData()">Submit</button>
+                    </div>
+
+                </div>
+
+
+            </div>
+        </div>
+
+
+    </div>
+
+    </div>
+    <!-- /.conainer-fluid -->
+</main>
+{% endblock content %}

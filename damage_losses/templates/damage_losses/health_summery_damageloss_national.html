@@ -1,0 +1,656 @@
+{% extends "dashboard/base.html" %}
+{% block content %}
+<!-- Main content -->
+<main class="main" ng-app="dlHealthSummaryDamageNationwideApp"
+      ng-controller="DlHealthSummaryDamageNationwideController">
+
+    <!-- Breadcrumb -->
+    <ol class="breadcrumb">
+
+        <li class="breadcrumb-item"><a href="#">Admin</a>
+        </li>
+        <li class="breadcrumb-item"><a href="#">Health Sector</a>
+        </li>
+        <li class="breadcrumb-item active"></li>
+        <li class="breadcrumb-item active"><span class="label label-success" style="font-size:14px;">Table 10: Summary of Damage and Losses in the Health Sector Nationwide</span>
+        </li>
+
+    </ol>
+
+
+    <div class="container-fluid">
+
+        <div>
+            <ul class='nav nav-wizard'>
+                <li class="active"><a href='#step1' data-toggle="tab">1 Public Sector</a></li>
+                <li><a href='#step2' data-toggle="tab">2 Private Sector</a></li>
+                <li><a href='#step3' data-toggle="tab">3 Total Damages and Losses</a></li>
+
+
+            </ul>
+
+            <div id="myTabContent" class="tab-content">
+                <div class="tab-pane active" id="step1">
+
+                    <table class="table table-bordered" style="width:98.3%;background:#E4E5E6;">
+                        <colgroup>
+                            <col width="202"/>
+                            <col width="90" span="7"/>
+                        </colgroup>
+                        <tbody>
+                        <tr class="trhead">
+                            <td style="padding-left:5px;"> Name of Province</td>
+
+                            <td colspan="7" style="background:#EFEFEF;">
+                                <select id="selectbasic" name="selectbasic" ng-model="$scope.district"
+                                        class="form-control"
+                                        style="width:50%;font-weight:400;">
+
+                                    <option value="" selected="true">Select a District</option>
+                                    {% for district in districts %}
+
+                                    <option value={{district.id}}>{{district.name}}
+                                        {% endfor %}
+                                </select>
+                            </td>
+                            <td colspan="3" style="padding-right:5px;text-align:right;">
+                                Disaster Type
+                            </td>
+                            <td colspan="2" style="background:#EFEFEF;">
+                                <select id="selectbasic" name="selectbasic" class="form-control"
+                                        style="width:50%;font-weight:400;">
+                                    <option value="1">Option one</option>
+                                    <option value="2">Option two</option>
+                                </select>
+                            </td>
+                        </tr>
+
+                        <tr height="34" class="trheadc">
+                            <td rowspan="2" width="202" height="54" style="text-align:left;padding-left:5px;">
+                                Facilities and Assets
+                            </td>
+                            <td rowspan="2" width="90" style="text-align:center;">
+                                Total Number Affected
+                            </td>
+                            <td colspan="2" width="180">
+                                Total Number of Patients Affected
+                            </td>
+                            <td rowspan="2" width="90">
+                                Total Damages (LKR)
+                            </td>
+                            <td colspan="2" width="180" style="text-align:center;">
+                                Losses (LKR)
+                            </td>
+                            <td rowspan="2" width="90">
+                                Total Losses (LKR)
+                            </td>
+                        </tr>
+                        <tr height="20" class="trsubc">
+                            <td width="90" height="20">
+                                Male
+                            </td>
+                            <td width="90">
+                                Female
+                            </td>
+                            <td width="90">
+                                Year 1
+                            </td>
+                            <td width="90">
+                                Year 2
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div style="height:400px;overflow:auto;">
+                        <table class="table table-bordered">
+                            <tr height="20" class="trhead">
+                                <td width="202" height="20" class="trhead">
+                                    Province 1
+                                </td>
+                                <td width="90">
+                                </td>
+                                <td width="90">
+                                </td>
+                                <td width="90">
+                                </td>
+                                <td width="90">
+                                </td>
+                                <td width="90">
+                                </td>
+                                <td width="90">
+                                </td>
+                                <td width="90">
+                                </td>
+                            </tr>
+                            <tr height="20" class="trhead">
+                                <td width="202" height="20" class="trheadc">
+                                    Line Ministry Health System
+                                </td>
+                                <td width="90">
+                                </td>
+                                <td width="90">
+                                </td>
+                                <td width="90">
+                                </td>
+                                <td width="90">
+                                </td>
+                                <td width="90">
+                                </td>
+                                <td width="90">
+                                </td>
+                                <td width="90">
+                                </td>
+                            </tr>
+                            <tr ng-repeat="dsnPubP1Lmh in dlhealthsummarydamagenationwide.Table_10.DsnPubP1Lmh"
+                                height="20">
+
+                                <td ng-bind="dsnPubP1Lmh.facilities_assets"
+                                    ng-if="dsnPubP1Lmh.facilities_assets=='Total'" width="264" height="20"
+                                    class="boldash">
+
+                                </td>
+                                <td ng-bind="dsnPubP1Lmh.facilities_assets"
+                                    ng-if="dsnPubP1Lmh.facilities_assets!='Total'" width="264" height="20" class="tdpa">
+
+                                </td>
+                                <td ng-repeat="(key, value) in dsnPubP1Lmh" ng-if="$index > 0" width="98">
+                                    <span ng-bind="dsnPubP1Lmh[key]"></span>
+                                </td>
+
+                            </tr>
+
+                            <tr height="20" class="trheadc">
+                                <td width="202" height="20">
+                                    MOH
+                                </td>
+                                <td width="90">
+                                </td>
+                                <td width="90">
+                                </td>
+                                <td width="90">
+                                </td>
+                                <td width="90">
+                                </td>
+                                <td width="90">
+                                </td>
+                                <td width="90">
+                                </td>
+                                <td width="90">
+                                </td>
+                            </tr>
+                            <tr ng-repeat="dsnPubP1Moh in dlhealthsummarydamagenationwide.Table_10.DsnPubP1Moh"
+                                height="20">
+
+                                <td ng-bind="dsnPubP1Moh.facilities_assets"
+                                    ng-if="dsnPubP1Moh.facilities_assets=='Total'" width="264" height="20"
+                                    class="boldash">
+
+                                </td>
+                                <td ng-bind="dsnPubP1Moh.facilities_assets"
+                                    ng-if="dsnPubP1Moh.facilities_assets!='Total'" width="264" height="20" class="tdpa">
+
+                                </td>
+                                <td ng-repeat="(key, value) in dsnPubP1Moh" ng-if="$index > 0" width="98">
+                                    <span ng-bind="dsnPubP1Moh[key]"></span>
+                                </td>
+
+                            </tr>
+
+
+                            <tr height="20" class="trheadc">
+                                <td width="202" height="20">
+                                    Other medical facilities
+                                </td>
+                                <td width="90">
+                                </td>
+                                <td width="90">
+                                </td>
+                                <td width="90">
+                                </td>
+                                <td width="90">
+                                </td>
+                                <td width="90">
+                                </td>
+                                <td width="90">
+                                </td>
+                                <td width="90">
+                                </td>
+                            </tr>
+                            <tr ng-repeat="dsnPubP1Omc in dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc"
+                                height="20">
+
+                                <td ng-bind="dsnPubP1Omc.facilities_assets"
+                                    ng-if="dsnPubP1Omc.facilities_assets=='Total' || dsnPubP1Omc.facilities_assets=='TOTAL'"
+                                    width="264" height="20"
+                                    class="boldash">
+
+                                </td>
+                                <td ng-bind="dsnPubP1Omc.facilities_assets"
+                                    ng-if="dsnPubP1Omc.facilities_assets!='Total' && dsnPubP1Omc.facilities_assets!='TOTAL'"
+                                    width="264" height="20" class="tdpa">
+
+                                </td>
+                                <td ng-repeat="(key, value) in dsnPubP1Omc" ng-if="$index > 0" width="98">
+                                    <span ng-bind="dsnPubP1Omc[key]"></span>
+                                </td>
+
+                            </tr>
+
+                            <tr height="20" class="trhead">
+                                <td width="202" height="20">
+                                    Province N
+                                </td>
+                                <td width="90">
+                                </td>
+                                <td width="90">
+                                </td>
+                                <td width="90">
+                                </td>
+                                <td width="90">
+                                </td>
+                                <td width="90">
+                                </td>
+                                <td width="90">
+                                </td>
+                                <td width="90">
+                                </td>
+                            </tr>
+                            <tr height="20" class="trheadc">
+                                <td width="202" height="20">
+                                    Line Ministry Health System
+                                </td>
+                                <td width="90">
+                                </td>
+                                <td width="90">
+                                </td>
+                                <td width="90">
+                                </td>
+                                <td width="90">
+                                </td>
+                                <td width="90">
+                                </td>
+                                <td width="90">
+                                </td>
+                                <td width="90">
+                                </td>
+                            </tr>
+
+                            <tr ng-repeat="dsnPubPnLmh in dlhealthsummarydamagenationwide.Table_10.DsnPubPnLmh"
+                                height="20">
+
+                                <td ng-bind="dsnPubPnLmh.facilities_assets"
+                                    ng-if="dsnPubPnLmh.facilities_assets=='Total'"
+                                    width="264" height="20" class="boldash">
+
+                                </td>
+                                <td ng-bind="dsnPubPnLmh.facilities_assets"
+                                    ng-if="dsnPubPnLmh.facilities_assets!='Total'"
+                                    width="264" height="20" class="tdpa">
+
+                                </td>
+                                <td ng-repeat="(key, value) in dsnPubPnLmh" ng-if="$index > 0 && $index < 7 "
+                                    width="98">
+                                    <input id="textinput" ng-model="dsnPubPnLmh[key]" name="textinput" type="text"
+                                           placeholder=""
+                                           class="form-control input-md">
+                                </td>
+
+                                <td nwidth="98">
+                                    <span ng-bind="dsnPubPnLmh.total_losses"></span>
+                                </td>
+
+                            </tr>
+
+                            <tr height="20" class="trheadc">
+                                <td width="202" height="20">
+                                    MOH
+                                </td>
+                                <td width="90">
+                                </td>
+                                <td width="90">
+                                </td>
+                                <td width="90">
+                                </td>
+                                <td width="90">
+                                </td>
+                                <td width="90">
+                                </td>
+                                <td width="90">
+                                </td>
+                                <td width="90">
+                                </td>
+                            </tr>
+
+                            <tr ng-repeat="dsnPubPnMoh in dlhealthsummarydamagenationwide.Table_10.DsnPubPnMoh"
+                                height="20">
+
+                                <td ng-bind="dsnPubPnMoh.facilities_assets"
+                                    ng-if="dsnPubPnMoh.facilities_assets=='Total'"
+                                    width="264" height="20" class="boldash">
+
+                                </td>
+                                <td ng-bind="dsnPubPnMoh.facilities_assets"
+                                    ng-if="dsnPubPnMoh.facilities_assets!='Total'"
+                                    width="264" height="20" class="tdpa">
+
+                                </td>
+                                <td ng-repeat="(key, value) in dsnPubPnMoh"
+                                    ng-if="$index > 0 && $index < 7 && dsnPubPnMoh.facilities_assets!='Total' "
+                                    width="98">
+                                    <input id="textinput" ng-model="dsnPubPnMoh[key]" name="textinput" type="text"
+                                           placeholder=""
+                                           class="form-control input-md">
+                                </td>
+                                <td width="98">
+                                    <span ng-bind="dsnPubPnMoh.total_losses"></span>
+                                </td>
+                                <td ng-repeat="(key, value) in dsnPubPnMoh"
+                                    ng-if="$index > 0 && $index < 7 && dsnPubPnMoh.facilities_assets=='Total' "
+                                    width="98">
+                                    <span ng-bind="dsnPubPnMoh[key]"></span>
+                                </td>
+
+                            </tr>
+
+                            <tr height="20" class="trheadc">
+                                <td width="202" height="20">
+                                    Other Medical Facilities
+                                </td>
+                                <td width="90">
+                                </td>
+                                <td width="90">
+                                </td>
+                                <td width="90">
+                                </td>
+                                <td width="90">
+                                </td>
+                                <td width="90">
+                                </td>
+                                <td width="90">
+                                </td>
+                                <td width="90">
+                                </td>
+                            </tr>
+                            <tr ng-repeat="dsnPubPnOmc in dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc"
+                                height="20">
+
+                                <td ng-bind="dsnPubPnOmc.facilities_assets"
+                                    ng-if="dsnPubPnOmc.facilities_assets=='Total' || dsnPubPnOmc.facilities_assets=='TOTAL' || dsnPubPnOmc.facilities_assets=='GRAND TOTAL' "
+                                    width="264" height="20" class="boldash">
+
+                                </td>
+                                <td ng-bind="dsnPubPnOmc.facilities_assets"
+                                    ng-if="dsnPubPnOmc.facilities_assets!='Total' && dsnPubPnOmc.facilities_assets!='TOTAL' && dsnPubPnOmc.facilities_assets!='GRAND TOTAL'"
+                                    width="264" height="20" class="tdpa">
+
+                                </td>
+                                <td ng-repeat="(key, value) in dsnPubPnOmc"
+                                    ng-if="$index > 0 && $index < 7 && dsnPubPnOmc.facilities_assets!='Total' && dsnPubPnOmc.facilities_assets!='TOTAL' && dsnPubPnOmc.facilities_assets!='GRAND TOTAL' "
+                                    width="98">
+                                    <input id="textinput" ng-model="dsnPubPnOmc[key]" name="textinput" type="text"
+                                           placeholder=""
+                                           class="form-control input-md">
+                                </td>
+                                <td width="98">
+                                    <span ng-bind="dsnPubPnOmc.total_losses"></span>
+                                </td>
+                                <td ng-repeat="(key, value) in dsnPubPnOmc"
+                                    ng-if="$index > 0 && $index < 7 && dsnPubPnOmc.facilities_assets=='Total' "
+                                    width="98">
+                                    <span ng-bind="dsnPubPnOmc[key]"></span>
+                                </td>
+                                <td ng-repeat="(key, value) in dsnPubPnOmc"
+                                    ng-if="$index > 0 && $index < 7 && dsnPubPnOmc.facilities_assets=='TOTAL' "
+                                    width="98">
+                                    <span ng-bind="dsnPubPnOmc[key]"></span>
+                                </td>
+                                <td ng-repeat="(key, value) in dsnPubPnOmc"
+                                    ng-if="$index > 0 && $index < 7 && dsnPubPnOmc.facilities_assets=='GRAND TOTAL' "
+                                    width="98">
+                                    <span ng-bind="dsnPubPnOmc[key]"></span>
+                                </td>
+
+                            </tr>
+
+                            </tbody>
+                        </table>
+                        <br>
+                        <a href='#step2' data-toggle="tab" class="btn btn-sm btn-info pull-right"> Fill Private Sector
+                            Informations</a>
+                    </div>
+
+                </div>
+
+                <div class="tab-pane" id="step2">
+
+                    <table class="table table-bordered" style="width:100%;background:#E4E5E6;">
+                        <colgroup>
+                            <col width="264"/>
+                            <col width="98" span="6"/>
+                        </colgroup>
+                        <tbody>
+
+                        <tr height="34" class="trheadc">
+                            <td rowspan="2" width="202" height="54" style="text-align:left;padding-left:5px;">
+                                Facilities and Assets
+                            </td>
+                            <td rowspan="2" width="90">
+                                Total Number Affected
+                            </td>
+                            <td colspan="2" width="180" style="text-align:center;">
+                                Total Number of Patients Affected
+                            </td>
+                            <td rowspan="2" width="90">
+                                Total Damages (LKR)
+                            </td>
+                            <td colspan="2" width="180" style="text-align:center;">
+                                Losses (LKR)
+                            </td>
+                            <td rowspan="2" width="90">
+                                Total Losses (LKR)
+                            </td>
+                        </tr>
+                        <tr height="20" class="trsubc">
+                            <td width="90" height="20">
+                                Male
+                            </td>
+                            <td width="90">
+                                Female
+                            </td>
+                            <td width="90">
+                                Year 1
+                            </td>
+                            <td width="90">
+                                Year 2
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div style="height:400px;overflow:auto;">
+                        <table class="table table-bordered">
+                            <tr height="20" class="trheadc">
+                                <td width="202" height="20">
+                                    Province 1
+                                </td>
+                                <td width="90">
+                                </td>
+                                <td width="90">
+                                </td>
+                                <td width="90">
+                                </td>
+                                <td width="90">
+                                </td>
+                                <td width="90">
+                                </td>
+                                <td width="90">
+                                </td>
+                                <td width="90">
+                                </td>
+                            </tr>
+
+                            <tr ng-repeat="dsnPvtP1 in dlhealthsummarydamagenationwide.Table_10.DsnPvtP1"
+                                height="20">
+
+                                <td ng-bind="dsnPvtP1.facilities_assets"
+                                    ng-if="dsnPvtP1.facilities_assets=='Total'"
+                                    width="264" height="20" class="boldash">
+
+                                </td>
+                                <td ng-bind="dsnPvtP1.facilities_assets"
+                                    ng-if="dsnPvtP1.facilities_assets!='Total'"
+                                    width="264" height="20" class="tdpa">
+
+                                </td>
+
+                                <td ng-repeat="(key, value) in dsnPvtP1"
+                                    ng-if="$index > 0 && $index < 8 "
+                                    width="98">
+                                    <span ng-bind="dsnPvtP1[key]"></span>
+                                </td>
+
+                            </tr>
+
+                            <tr height="20" class="trheadc">
+                                <td width="202" height="20">
+                                    Province N
+                                </td>
+                                <td width="90">
+                                </td>
+                                <td width="90">
+                                </td>
+                                <td width="90">
+                                </td>
+                                <td width="90">
+                                </td>
+                                <td width="90">
+                                </td>
+                                <td width="90">
+                                </td>
+                                <td width="90">
+                                </td>
+                            </tr>
+
+                            <tr ng-repeat="dsnPvtPn in dlhealthsummarydamagenationwide.Table_10.DsnPvtPn"
+                                height="20">
+
+                                <td ng-bind="dsnPvtPn.facilities_assets"
+                                    ng-if="dsnPvtPn.facilities_assets=='Total' || dsnPvtPn.facilities_assets=='TOTAL'"
+                                    width="264" height="20" class="boldash">
+
+                                </td>
+                                <td ng-bind="dsnPvtPn.facilities_assets"
+                                    ng-if="dsnPvtPn.facilities_assets!='Total' && dsnPvtPn.facilities_assets!='TOTAL'"
+                                    width="264" height="20" class="tdpa">
+
+                                </td>
+                                <td ng-repeat="(key, value) in dsnPvtPn"
+                                    ng-if="$index > 0 && $index < 7 && dsnPvtPn.facilities_assets!='Total' && dsnPvtPn.facilities_assets!='TOTAL'"
+                                    width="98">
+                                    <input id="textinput" ng-model="dsnPvtPn[key]" name="textinput" type="text"
+                                           placeholder=""
+                                           class="form-control input-md">
+                                </td>
+                                <td width="98">
+                                    <span ng-bind="dsnPvtPn.total_losses"></span>
+                                </td>
+                                <td ng-repeat="(key, value) in dsnPvtPn"
+                                    ng-if="$index > 0 && $index < 7 && (dsnPvtPn.facilities_assets=='Total' || dsnPvtPn.facilities_assets=='TOTAL')  "
+                                    width="98">
+                                    <span ng-bind="dsnPvtPn[key]"></span>
+                                </td>
+                                <!--td ng-repeat="(key, value) in dsnPvtPn"
+                                    ng-if="$index > 0 && $index < 7 && dsnPvtPn.facilities_assets=='TOTAL'"
+                                    width="98">
+                                    <span ng-bind="dsnPvtPn[key]"></span>
+                                </td-->
+
+
+                            </tr>
+
+                            </tbody>
+                        </table>
+                        <br>
+                        <a href='#step3' data-toggle="tab" class="btn btn-sm btn-info pull-right"> Fill Total Damages
+                            and Losses Informations</a>
+
+                    </div>
+                </div>
+
+                <div class="tab-pane" id="step3">
+                    <table class="table table-bordered" style="width:100%;background:#E4E5E6;">
+                        <colgroup>
+                            <col width="202"/>
+                            <col width="90" span="7"/>
+                        </colgroup>
+                        <tbody>
+
+                        <tr height="20" class="trheadc">
+                            <td rowspan="2" width="202" height="40" style="text-align:left;padding-left:5px;">
+                                Ownership
+                            </td>
+                            <td colspan="2" rowspan="2" width="180">
+                                Damages (LKR)
+                            </td>
+                            <td colspan="4" width="360" style="text-align:center;">
+                                Losses (LKR)
+                            </td>
+                            <td rowspan="2" width="90">
+                                Total (LKR)
+                            </td>
+                        </tr>
+                        <tr height="20" style="background:#E4E5E6;" class="trsubc">
+                            <td colspan="2" width="180" height="20">
+                                Year 1
+                            </td>
+                            <td colspan="2" width="180">
+                                Year 2
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                    <div style="height:400px;overflow:auto;">
+                        <table class="table table-bordered">
+                         <tr ng-repeat="dsnTdlOwship in dlhealthsummarydamagenationwide.Table_10.DsnTdlOwship"
+                                height="20">
+
+                                <td ng-bind="dsnTdlOwship.ownership"
+                                    ng-if="dsnTdlOwship.ownership=='TOTAL'"
+                                    width="264" height="20" class="boldash">
+
+                                </td>
+                                <td ng-bind="dsnTdlOwship.ownership"
+                                    ng-if="dsnTdlOwship.ownership!='TOTAL'"
+                                    width="264" height="20" class="tdpa">
+
+                                </td>
+
+                                <td ng-repeat="(key, value) in dsnTdlOwship"
+                                    ng-if="$index > 0 && $index < 8 "
+                                    width="98">
+                                    <span ng-bind="dsnTdlOwship[key]"></span>
+                                </td>
+
+                            </tr>
+                            </tbody>
+                        </table>
+                        <div class="pull-right">
+                            <br>
+                            <button type="button" class="btn btn-info">Clear</button>
+                            <button type="button" class="btn btn-success" ng-click="SaveData()">Submit</button>
+                        </div>
+
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+
+
+    </div>
+
+    </div>
+    <!-- /.conainer-fluid -->
+</main>
+{% endblock content %}

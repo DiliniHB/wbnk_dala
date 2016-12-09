@@ -1,0 +1,52 @@
+CREATE TABLE health.buc_marc_oassets (
+    id integer NOT NULL,
+    particulars character varying(255),
+    teaching_hospital real,
+    provincial_general_hospital real,
+    district_general_hospital real,
+    office real,
+    other real,
+    district integer,
+    created_user integer,
+    lmu integer,
+    created_date timestamp without time zone,
+    lmd timestamp without time zone,
+    key bigint
+);
+
+
+ALTER TABLE health.buc_marc_oassets OWNER TO postgres;
+
+ALTER TABLE ONLY health.buc_marc_oassets
+    ADD CONSTRAINT "fk_district_buc_marc_oassets" FOREIGN KEY (district) REFERENCES public.district(id);
+
+
+CREATE TABLE health.buc_omar_supplies (
+    id integer NOT NULL,
+    particulars character varying(255),
+    base_hospital real,
+    divisional_hospital real,
+    rural_hospital real,
+    central_dispensary real,
+    pri_med_cunits real,
+    pri_health_ccenters real,
+    mat_child_health_clinics real,
+    district integer,
+    created_user integer,
+    lmu integer,
+    created_date timestamp without time zone,
+    lmd timestamp without time zone,
+    key bigint,
+    bs_date character varying(255)
+);
+
+
+ALTER TABLE health.buc_omar_supplies OWNER TO postgres;
+
+
+ALTER TABLE ONLY health.buc_omar_supplies
+    ADD CONSTRAINT fk_district_buc_omar_supplies FOREIGN KEY (district) REFERENCES public.district(id);
+
+
+
+

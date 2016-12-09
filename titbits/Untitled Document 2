@@ -1,0 +1,6 @@
+'{"table_data":{"Table_1":{"BhsPlc":[{"male":5,"female":3,"children":5,"elderly":7}],"BhsComDiseases":[{"com_disease":"Diarrhea","male":5,"female":6,"children":7,"elderly":8},{"com_disease":"Dengue","male":5,"female":6,"children":7,"elderly":8}],"BhsVi":[{"vital_indicators":"Under-5 Mortality Rate","male":3,"female":3,"children":3,"elderly":3},{"vital_indicators":"Mortality Rate","male":3,"female":3,"children":3,"elderly":3}],"BhsOi":[{"other_indicators":"Crude Birth Rate","unit_measure":1},{"other_indicators":"Maternal Mortality Rate","unit_measure":""}]}}}'
+
+import django
+import yaml
+import base_line.views as view1
+view1.bs_save_hs_data()

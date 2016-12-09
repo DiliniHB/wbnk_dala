@@ -1,0 +1,1236 @@
+{% extends "dashboard/base.html" %}
+{% load static %}
+{% block content %}
+
+<!-- Main content -->
+<main class="main" ng-app="dsHealthDamagelostOtherMediApp" ng-controller="DsHealthDamagelostOtherMediController">
+
+    <!-- Breadcrumb -->
+    <ol class="breadcrumb">
+
+        <li class="breadcrumb-item"><a href="#">Admin</a>
+        </li>
+        <li class="breadcrumb-item"><a href="#">Health Sector</a>
+        </li>
+
+        <li class="breadcrumb-item active"><span class="label label-success" style="font-size:14px;">Table 6: Damages and Losses of the Other Medical Facilities</span>
+        </li>
+
+    </ol>
+
+
+    <div class="container-fluid">
+
+        <div>
+            <ul class='nav nav-wizard'>
+                <li class="active"><a href='#step1' data-toggle="tab">1 Destroyed Facilities and Assets</a></li>
+                <li><a href='#step2' data-toggle="tab">2 No of Destroyed Assets </a></li>
+                <li><a href='#step3' data-toggle="tab">3 Partially Damaged Facilities and Assets</a></li>
+                <li><a href='#step4' data-toggle="tab">4 No of Partially Damaged Assets</a></li>
+                <li><a href='#step5' data-toggle="tab">5 Losses</a></li>
+
+            </ul>
+
+            <div id="myTabContent" class="tab-content">
+                <div class="tab-pane active" id="step1">
+                    <table class="table table-bordered" style="width:100%;background:#E4E5E6;">
+                        <colgroup>
+                            <col width="264"/>
+                            <col width="98" span="8"/>
+                        </colgroup>
+                        <tbody>
+                        <tr class="trhead">
+                            <td style="padding-left:5px;"> Name of District</td>
+
+                            <td colspan="3" style="background:#EFEFEF;">
+                                <select id="selectbasic" name="selectbasic" ng-model="district"
+                                        class="form-control"
+                                        style="width:100%;font-weight:400;">
+
+                                    <option value="" selected="true">Select a District</option>
+                                    {% for district in districts %}
+
+                                    <option value={{district.id}}>{{district.name}}
+                                        {% endfor %}
+                                </select>
+
+                            </td>
+                            <td colspan="3" style="padding-right:5px;text-align:right;">
+                                Incident
+                            </td>
+                            <td colspan="2" style="background:#EFEFEF;">
+
+                                <select id="selectbasic" name="selectbasic" ng-model="incident"
+                                        class="form-control"
+                                        style="width:100%;font-weight:400;">
+
+                                    <option value="" selected="true">Select an Incident</option>
+                                    {% for incident in incidents %}
+
+                                    <option value={{incident.id}}>{{incident.disaster_type.name}}
+                                        {{incident.reported_date_time}}
+                                        {% endfor %}
+                                </select>
+                            </td>
+                        </tr>
+
+                        <tr height="20" class="trheadc">
+                            <td width="264" height="20">
+                            </td>
+                            <td colspan="7" width="686" style="text-align:center;">
+                                Type of Facility
+                            </td>
+                            <td width="98">
+                            </td>
+                        </tr>
+                        <tr height="34" class="trsubc">
+                            <td width="264" height="34" class="trheadc">
+                            </td>
+                            <td width="98">
+                                Base Hospital
+                            </td>
+                            <td width="98">
+                                Divisional Hospital
+                            </td>
+                            <td width="98">
+                                Rural Hospital
+                            </td>
+                            <td width="98">
+                                Central Dispensary
+                            </td>
+                            <td width="98">
+                                PMCUs
+                            </td>
+                            <td width="98">
+                                PHCCs
+                            </td>
+                            <td width="98">
+                                MCHCs
+                            </td>
+                            <td width="98">
+                                Total Number
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div style="height:400px;overflow:auto;">
+                        <table class="table table-bordered">
+                            <tbody>
+
+                            <tr ng-repeat="dmfDfaNum in dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDfaNum"
+                                height="20">
+
+                                <td ng-bind="dmfDfaNum.num_des_facilities" width="264" height="20" class="tdpa">
+
+                                </td>
+                                <td ng-repeat="(key, value) in dmfDfaNum"
+                                    ng-if="$index > 0 && $index<8 && dmfDfaNum.total!='Total' " width="98">
+                                    <input id="textinput" ng-model="dmfDfaNum[key]" name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md">
+                                </td>
+
+                                <td width="98">
+
+                                    <input id="textinput" ng-model="dmfDfaNum.total"
+                                           ng-value="dmfDfaNum.total=dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDfaNum[0].base_hospital + dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDfaNum[0].divisional_hospital + dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDfaNum[0].rural_hospital + dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDfaNum[0].central_dispensary + dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDfaNum[0].pmcus + dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDfaNum[0].phccs + dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDfaNum[0].mchcs"
+                                           name="textinput" type="text"
+                                           placeholder=""
+                                           class="form-control input-md">
+
+                                </td>
+
+                            </tr>
+                            <tr height="20" class="trheadc">
+                                <td width="264" height="20">
+                                    Number of Patients Affected
+                                </td>
+                                <td width="98">
+                                </td>
+                                <td width="98">
+                                </td>
+                                <td width="98">
+                                </td>
+                                <td width="98">
+                                </td>
+                                <td width="98">
+                                </td>
+                                <td width="98">
+                                </td>
+                                <td width="98">
+                                </td>
+                                <td width="98">
+                                </td>
+                            </tr>
+                            <tr ng-repeat="dmfDfaPaf in dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDfaPaf"
+                                height="20">
+
+                                <td ng-bind="dmfDfaPaf.num_patients_affected" width="264" height="20" class="tdpa">
+
+                                </td>
+                                <td ng-repeat="(key, value) in dmfDfaPaf"
+                                    ng-if="$index > 0 && $index<8 && dmfDfaPaf.total!='Total' && dmfDfaPaf.num_patients_affected=='Male' "
+                                    width="98">
+                                    <input id="textinput" ng-model="dmfDfaPaf[key]" name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md">
+                                </td>
+                                <td ng-if="dmfDfaPaf.num_patients_affected=='Male'"
+                                    width="98">
+
+                                    <input id="textinput" ng-model="dmfDfaPaf.total"
+                                           ng-value="dmfDfaPaf.total=dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDfaPaf[0].base_hospital + dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDfaPaf[0].divisional_hospital + dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDfaPaf[0].rural_hospital + dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDfaPaf[0].central_dispensary + dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDfaPaf[0].pmcus + dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDfaPaf[0].phccs + dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDfaPaf[0].mchcs"
+                                           name="textinput" type="text"
+                                           placeholder=""
+                                           class="form-control input-md">
+
+                                </td>
+                                <td ng-repeat="(key, value) in dmfDfaPaf"
+                                    ng-if="$index > 0 && $index<8 && dmfDfaPaf.total!='Total' && dmfDfaPaf.num_patients_affected=='Female' "
+                                    width="98">
+                                    <input id="textinput" ng-model="dmfDfaPaf[key]" name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md">
+                                </td>
+                                <td ng-if="dmfDfaPaf.num_patients_affected=='Female'" width="98">
+
+                                    <input id="textinput" ng-model="dmfDfaPaf.total"
+                                           ng-value="dmfDfaPaf.total=dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDfaPaf[1].base_hospital + dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDfaPaf[1].divisional_hospital + dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDfaPaf[1].rural_hospital + dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDfaPaf[1].central_dispensary + dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDfaPaf[1].pmcus + dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDfaPaf[1].phccs + dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDfaPaf[1].mchcs"
+                                           name="textinput" type="text"
+                                           placeholder=""
+                                           class="form-control input-md">
+
+                                </td>
+
+                            </tr>
+
+
+                            </tbody>
+                        </table>
+                        <br>
+                        <a href="#step2" class="btn btn-sm btn-info pull-right" data-toggle="tab"><span
+                                class="glyphicon glyphicon-arrow-right"></span> Fill No of Destroyed Assets Informations</a>
+                    </div>
+
+
+                </div>
+
+                <div class="tab-pane" id="step2">
+                    <table class="table table-bordered" style="width:98.3%;">
+                        <colgroup>
+                            <col width="264"/>
+                            <col width="98" span="8"/>
+                        </colgroup>
+                        <tbody>
+
+                        <tr height="34" class="trheadc">
+                            <td width="264" height="34">
+                            </td>
+                            <td colspan="7" width="686" style="text-align:center;">
+                                Type of Facility
+                            </td>
+                            <td rowspan="2" width="98">
+                                Total Damages (LKR)
+                            </td>
+                        </tr>
+                        <tr height="34" class="trsubc">
+                            <td width="270" height="34" class="trhead" style="text-align:left;">
+                                Assets &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            </td>
+                            <td width="98">
+                                Base Hospital
+                            </td>
+                            <td width="98">
+                                Divisional Hospital
+                            </td>
+                            <td width="98">
+                                Rural Hospital
+                            </td>
+                            <td width="98">
+                                Central Dispensary
+                            </td>
+                            <td width="98">
+                                PMCUs
+                            </td>
+                            <td width="98">
+                                PHCCs
+                            </td>
+                            <td width="98">
+                                MCHCs
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div style="height:400px;overflow:auto;">
+                        <table class="table table-bordered">
+                            <tbody>
+                            <tr height="20" class="trheadc">
+                                <td width="264" height="20">
+                                    Structures (in sqm)
+                                </td>
+                                <td width="98">
+
+                                </td>
+                                <td width="98">
+
+                                </td>
+                                <td width="98">
+
+                                </td>
+                                <td width="98">
+
+                                </td>
+                                <td width="98">
+
+                                </td>
+                                <td width="98">
+
+                                </td>
+                                <td width="98">
+
+                                </td>
+                                <td width="98">
+
+                                </td>
+                            </tr>
+                            <tr ng-repeat="dmfDaStructure in dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaStructure"
+                                height="20">
+
+                                <td ng-bind="dmfDaStructure.asset" width="264" height="20" class="tdpa">
+
+                                </td>
+                                <td ng-repeat="(key, value) in dmfDaStructure"
+                                    ng-if="$index > 0 && $index < 8 && dmfDaStructure.asset!='Value of Destroyed Structure'"
+                                    width="98">
+                                    <input id="textinput" ng-model="dmfDaStructure[key]" name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md">
+                                </td>
+                                <td ng-if="dmfDaStructure.asset=='1 Floor Structure' " width="98">
+                                    <input id="textinput" ng-model="dmfDaStructure.total"
+                                           ng-value="dmfDaStructure.total=dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaStructure[0].base_hospital + dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaStructure[0].divisional_hospital + dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaStructure[0].rural_hospital + dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaStructure[0].central_dispensary + dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaStructure[0].pmcus + dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaStructure[0].phccs + dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaStructure[0].mchcs "
+                                           name="textinput" type="text"
+                                           placeholder=""
+                                           class="form-control input-md">
+                                </td>
+                                <td ng-if="dmfDaStructure.asset=='2-3 Floors Structure' " width="98">
+                                    <input id="textinput" ng-model="dmfDaStructure.total"
+                                           ng-value="dmfDaStructure.total=dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaStructure[1].base_hospital + dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaStructure[1].divisional_hospital + dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaStructure[1].rural_hospital + dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaStructure[1].central_dispensary + dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaStructure[1].pmcus + dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaStructure[1].phccs + dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaStructure[1].mchcs "
+                                           name="textinput" type="text"
+                                           placeholder=""
+                                           class="form-control input-md">
+                                </td>
+                                <td ng-if="dmfDaStructure.asset=='More Than 3 Floors Structure' " width="98">
+                                    <input id="textinput" ng-model="dmfDaStructure.total"
+                                           ng-value="dmfDaStructure.total=dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaStructure[2].base_hospital + dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaStructure[2].divisional_hospital + dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaStructure[2].rural_hospital + dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaStructure[2].central_dispensary + dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaStructure[2].pmcus + dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaStructure[2].phccs + dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaStructure[2].mchcs "
+                                           name="textinput" type="text"
+                                           placeholder=""
+                                           class="form-control input-md">
+                                </td>
+
+                                <td ng-repeat="(key, value) in dmfDaStructure"
+                                    ng-if="$index >0 && dmfDaStructure.asset == 'Value of Destroyed Structure'"
+                                    width="98">
+
+                                    <input id="text" ng-if="key=='base_hospital'"
+                                           ng-value="dmfDaStructure.base_hospital=dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaStructure[0].base_hospital + dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaStructure[1].base_hospital +dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaStructure[2].base_hospital   "
+
+                                           ng-model="dmfDaStructure.base_hospital" name="textinput" type="text"
+                                           placeholder=""
+                                           class="form-control input-md">
+                                    <input id="text" ng-if="key=='divisional_hospital'"
+                                           ng-value="dmfDaStructure.divisional_hospital=dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaStructure[0].divisional_hospital + dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaStructure[1].divisional_hospital +dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaStructure[2].divisional_hospital   "
+
+                                           ng-model="dmfDaStructure.divisional_hospital" name="textinput" type="text"
+                                           placeholder=""
+                                           class="form-control input-md">
+                                    <input id="text" ng-if="key=='rural_hospital'"
+                                           ng-value="dmfDaStructure.rural_hospital=dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaStructure[0].rural_hospital + dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaStructure[1].rural_hospital +dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaStructure[2].rural_hospital "
+
+                                           ng-model="dmfDaStructure.rural_hospital" name="textinput" type="text"
+                                           placeholder=""
+                                           class="form-control input-md">
+                                    <input id="text" ng-if="key=='central_dispensary'"
+                                           ng-value="dmfDaStructure.central_dispensary=dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaStructure[0].central_dispensary + dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaStructure[1].central_dispensary +dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaStructure[2].central_dispensary "
+
+                                           ng-model="dmfDaStructure.central_dispensary" name="textinput" type="text"
+                                           placeholder=""
+                                           class="form-control input-md">
+                                    <input id="text" ng-if="key=='pmcus'"
+                                           ng-value="dmfDaStructure.pmcus=dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaStructure[0].pmcus + dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaStructure[1].pmcus +dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaStructure[2].pmcus "
+
+                                           ng-model="dmfDaStructure.pmcus" name="textinput" type="text"
+                                           placeholder=""
+                                           class="form-control input-md">
+                                    <input id="text" ng-if="key=='phccs'"
+                                           ng-value="dmfDaStructure.phccs=dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaStructure[0].phccs + dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaStructure[1].phccs +dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaStructure[2].phccs "
+
+                                           ng-model="dmfDaStructure.phccs" name="textinput" type="text"
+                                           placeholder=""
+                                           class="form-control input-md">
+                                    <input id="text" ng-if="key=='mchcs'"
+                                           ng-value="dmfDaStructure.mchcs=dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaStructure[0].mchcs + dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaStructure[1].mchcs +dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaStructure[2].mchcs "
+
+                                           ng-model="dmfDaStructure.mchcs" name="textinput" type="text"
+                                           placeholder=""
+                                           class="form-control input-md">
+                                    <input id="text" ng-if="key=='total'"
+                                           ng-value="dmfDaStructure.total=dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaStructure[0].total + dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaStructure[1].total +dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaStructure[2].total "
+
+                                           ng-model="dmfDaStructure.total" name="textinput" type="text"
+                                           placeholder=""
+                                           class="form-control input-md">
+                                </td>
+
+
+                            </tr>
+
+
+                            <tr height="20" class="trheadc">
+                                <td width="264" height="20">
+                                    Set of Supplies
+                                </td>
+                                <td width="98">
+                                </td>
+                                <td width="98">
+                                </td>
+                                <td width="98">
+                                </td>
+                                <td width="98">
+                                </td>
+                                <td width="98">
+                                </td>
+                                <td width="98">
+                                </td>
+                                <td width="98">
+                                </td>
+                                <td width="98">
+                                </td>
+                            </tr>
+                            <tr ng-repeat="dmfDaSupplies in dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaSupplies"
+                                height="20">
+
+                                <td ng-bind="dmfDaSupplies.asset" width="264" height="20" class="tdpa">
+
+                                </td>
+                                <td ng-repeat="(key, value) in dmfDaSupplies"
+                                    ng-if="$index > 0 && $index < 8 && dmfDaSupplies.asset!='Value of Destroyed Supplies'"
+                                    width="98">
+                                    <input id="textinput" ng-model="dmfDaSupplies[key]" name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md">
+                                </td>
+                                <td ng-if="dmfDaSupplies.asset=='Medicines' " width="98">
+                                    <input id="textinput" ng-model="dmfDaSupplies.total"
+                                           ng-value="dmfDaSupplies.total=dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaSupplies[0].base_hospital + dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaSupplies[0].divisional_hospital + dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaSupplies[0].rural_hospital + dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaSupplies[0].central_dispensary + dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaSupplies[0].pmcus + dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaSupplies[0].phccs + dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaSupplies[0].mchcs "
+                                           name="textinput" type="text"
+                                           placeholder=""
+                                           class="form-control input-md">
+                                </td>
+                                <td ng-if="dmfDaSupplies.asset=='Medical Supplies' " width="98">
+                                    <input id="textinput" ng-model="dmfDaSupplies.total"
+                                           ng-value="dmfDaSupplies.total=dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaSupplies[1].base_hospital + dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaSupplies[1].divisional_hospital + dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaSupplies[1].rural_hospital + dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaSupplies[1].central_dispensary + dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaSupplies[1].pmcus + dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaSupplies[1].phccs + dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaSupplies[1].mchcs "
+                                           name="textinput" type="text"
+                                           placeholder=""
+                                           class="form-control input-md">
+                                </td>
+                                <td ng-if="dmfDaSupplies.asset=='Others' " width="98">
+                                    <input id="textinput" ng-model="dmfDaSupplies.total"
+                                           ng-value="dmfDaSupplies.total=dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaSupplies[2].base_hospital + dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaSupplies[2].divisional_hospital + dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaSupplies[2].rural_hospital + dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaSupplies[2].central_dispensary + dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaSupplies[2].pmcus + dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaSupplies[2].phccs + dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaSupplies[2].mchcs "
+                                           name="textinput" type="text"
+                                           placeholder=""
+                                           class="form-control input-md">
+                                </td>
+                                <td ng-repeat="(key, value) in dmfDaSupplies"
+                                    ng-if="$index >0 && dmfDaSupplies.asset == 'Value of Destroyed Supplies'"
+                                    width="98">
+
+                                    <input id="text" ng-if="key=='base_hospital'"
+                                           ng-value="dmfDaSupplies.base_hospital=dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaSupplies[0].base_hospital + dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaSupplies[1].base_hospital +dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaSupplies[2].base_hospital   "
+
+                                           ng-model="dmfDaSupplies.base_hospital" name="textinput" type="text"
+                                           placeholder=""
+                                           class="form-control input-md">
+                                    <input id="text" ng-if="key=='divisional_hospital'"
+                                           ng-value="dmfDaSupplies.divisional_hospital=dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaSupplies[0].divisional_hospital + dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaSupplies[1].divisional_hospital +dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaSupplies[2].divisional_hospital   "
+
+                                           ng-model="dmfDaSupplies.divisional_hospital" name="textinput" type="text"
+                                           placeholder=""
+                                           class="form-control input-md">
+                                    <input id="text" ng-if="key=='rural_hospital'"
+                                           ng-value="dmfDaSupplies.rural_hospital=dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaSupplies[0].rural_hospital + dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaSupplies[1].rural_hospital +dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaSupplies[2].rural_hospital "
+
+                                           ng-model="dmfDaSupplies.rural_hospital" name="textinput" type="text"
+                                           placeholder=""
+                                           class="form-control input-md">
+                                    <input id="text" ng-if="key=='central_dispensary'"
+                                           ng-value="dmfDaSupplies.central_dispensary=dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaSupplies[0].central_dispensary + dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaSupplies[1].central_dispensary +dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaSupplies[2].central_dispensary "
+
+                                           ng-model="dmfDaSupplies.central_dispensary" name="textinput" type="text"
+                                           placeholder=""
+                                           class="form-control input-md">
+                                    <input id="text" ng-if="key=='pmcus'"
+                                           ng-value="dmfDaSupplies.pmcus=dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaSupplies[0].pmcus + dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaSupplies[1].pmcus +dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaSupplies[2].pmcus "
+
+                                           ng-model="dmfDaSupplies.pmcus" name="textinput" type="text"
+                                           placeholder=""
+                                           class="form-control input-md">
+                                    <input id="text" ng-if="key=='phccs'"
+                                           ng-value="dmfDaSupplies.phccs=dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaSupplies[0].phccs + dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaSupplies[1].phccs +dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaSupplies[2].phccs "
+
+                                           ng-model="dmfDaSupplies.phccs" name="textinput" type="text"
+                                           placeholder=""
+                                           class="form-control input-md">
+                                    <input id="text" ng-if="key=='mchcs'"
+                                           ng-value="dmfDaSupplies.mchcs=dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaSupplies[0].mchcs + dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaSupplies[1].mchcs +dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaSupplies[2].mchcs "
+
+                                           ng-model="dmfDaSupplies.mchcs" name="textinput" type="text"
+                                           placeholder=""
+                                           class="form-control input-md">
+                                    <input id="text" ng-if="key=='total'"
+                                           ng-value="dmfDaSupplies.total=dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaSupplies[0].total + dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaSupplies[1].total +dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaSupplies[2].total "
+
+                                           ng-model="dmfDaSupplies.total" name="textinput" type="text"
+                                           placeholder=""
+                                           class="form-control input-md">
+                                </td>
+
+                            </tr>
+
+
+                            <tr height="20" class="trheadc">
+                                <td width="264" height="20">
+                                    Medical Equipment
+                                </td>
+                                <td width="98">
+                                </td>
+                                <td width="98">
+                                </td>
+                                <td width="98">
+                                </td>
+                                <td width="98">
+                                </td>
+                                <td width="98">
+                                </td>
+                                <td width="98">
+                                </td>
+                                <td width="98">
+                                </td>
+                                <td width="98">
+                                </td>
+                            </tr>
+                            <tr ng-repeat="dmfDaMequipment in dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaMequipment"
+                                height="20">
+
+                                <td ng-bind="dmfDaMequipment.asset" width="264" height="20" class="tdpa">
+
+                                </td>
+                                <td ng-repeat="(key, value) in dmfDaMequipment"
+                                    ng-if="$index > 0 && $index < 8 && dmfDaMequipment.asset!='Value of Destroyed Medical Equipment'"
+                                    width="98">
+                                    <input id="textinput" ng-model="dmfDaMequipment[key]" name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md">
+                                </td>
+                                <td ng-if="dmfDaMequipment.asset=='CT Scan' " width="98">
+                                    <input id="textinput" ng-model="dmfDaMequipment.total"
+                                           ng-value="dmfDaMequipment.total=dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaMequipment[0].base_hospital + dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaMequipment[0].divisional_hospital + dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaMequipment[0].rural_hospital + dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaMequipment[0].central_dispensary + dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaMequipment[0].pmcus + dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaMequipment[0].phccs + dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaMequipment[0].mchcs "
+                                           name="textinput" type="text"
+                                           placeholder=""
+                                           class="form-control input-md">
+                                </td>
+                                <td ng-if="dmfDaMequipment.asset=='X-ray Machine' " width="98">
+                                    <input id="textinput" ng-model="dmfDaMequipment.total"
+                                           ng-value="dmfDaMequipment.total=dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaMequipment[1].base_hospital + dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaMequipment[1].divisional_hospital + dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaMequipment[1].rural_hospital + dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaMequipment[1].central_dispensary + dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaMequipment[1].pmcus + dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaMequipment[1].phccs + dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaMequipment[1].mchcs "
+                                           name="textinput" type="text"
+                                           placeholder=""
+                                           class="form-control input-md">
+                                </td>
+                                <td ng-if="dmfDaMequipment.asset=='MRI Machine' " width="98">
+                                    <input id="textinput" ng-model="dmfDaMequipment.total"
+                                           ng-value="dmfDaMequipment.total=dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaMequipment[2].base_hospital + dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaMequipment[2].divisional_hospital + dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaMequipment[2].rural_hospital + dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaMequipment[2].central_dispensary + dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaMequipment[2].pmcus + dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaMequipment[2].phccs + dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaMequipment[2].mchcs "
+                                           name="textinput" type="text"
+                                           placeholder=""
+                                           class="form-control input-md">
+                                </td>
+                                <td ng-if="dmfDaMequipment.asset=='Other Equipment (Specify)' " width="98">
+                                    <input id="textinput" ng-model="dmfDaMequipment.total"
+                                           ng-value="dmfDaMequipment.total=dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaMequipment[3].base_hospital + dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaMequipment[3].divisional_hospital + dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaMequipment[3].rural_hospital + dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaMequipment[3].central_dispensary + dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaMequipment[3].pmcus + dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaMequipment[3].phccs + dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaMequipment[3].mchcs "
+                                           name="textinput" type="text"
+                                           placeholder=""
+                                           class="form-control input-md">
+                                </td>
+                                <td ng-repeat="(key, value) in dmfDaMequipment"
+                                    ng-if="$index >0 && dmfDaMequipment.asset == 'Value of Destroyed Medical Equipment'"
+                                    width="98">
+                                    <input id="text" ng-if="key=='base_hospital'"
+                                       ng-value="dmfDaMequipment.base_hospital=dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaMequipment[0].base_hospital + dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaMequipment[1].base_hospital +dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaMequipment[2].base_hospital   "
+
+                                       ng-model="dmfDaMequipment.base_hospital" name="textinput" type="text"
+                                       placeholder=""
+                                       class="form-control input-md">
+                                <input id="text" ng-if="key=='divisional_hospital'"
+                                       ng-value="dmfDaMequipment.divisional_hospital=dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaMequipment[0].divisional_hospital + dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaMequipment[1].divisional_hospital +dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaMequipment[2].divisional_hospital   "
+
+                                       ng-model="dmfDaMequipment.divisional_hospital" name="textinput" type="text"
+                                       placeholder=""
+                                       class="form-control input-md">
+                                <input id="text" ng-if="key=='rural_hospital'"
+                                       ng-value="dmfDaMequipment.rural_hospital=dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaMequipment[0].rural_hospital + dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaMequipment[1].rural_hospital +dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaMequipment[2].rural_hospital "
+
+                                       ng-model="dmfDaMequipment.rural_hospital" name="textinput" type="text"
+                                       placeholder=""
+                                       class="form-control input-md">
+                                <input id="text" ng-if="key=='central_dispensary'"
+                                       ng-value="dmfDaMequipment.central_dispensary=dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaMequipment[0].central_dispensary + dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaMequipment[1].central_dispensary +dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaMequipment[2].central_dispensary "
+
+                                       ng-model="dmfDaMequipment.central_dispensary" name="textinput" type="text"
+                                       placeholder=""
+                                       class="form-control input-md">
+                                <input id="text" ng-if="key=='pmcus'"
+                                       ng-value="dmfDaMequipment.pmcus=dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaMequipment[0].pmcus + dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaMequipment[1].pmcus +dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaMequipment[2].pmcus "
+
+                                       ng-model="dmfDaMequipment.pmcus" name="textinput" type="text"
+                                       placeholder=""
+                                       class="form-control input-md">
+                                <input id="text" ng-if="key=='phccs'"
+                                       ng-value="dmfDaMequipment.phccs=dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaMequipment[0].phccs + dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaMequipment[1].phccs +dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaMequipment[2].phccs "
+
+                                       ng-model="dmfDaMequipment.phccs" name="textinput" type="text"
+                                       placeholder=""
+                                       class="form-control input-md">
+                                <input id="text" ng-if="key=='mchcs'"
+                                       ng-value="dmfDaMequipment.mchcs=dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaMequipment[0].mchcs + dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaMequipment[1].mchcs +dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaMequipment[2].mchcs "
+
+                                       ng-model="dmfDaMequipment.mchcs" name="textinput" type="text"
+                                       placeholder=""
+                                       class="form-control input-md">
+                                <input id="text" ng-if="key=='total'"
+                                       ng-value="dmfDaMequipment.total=dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaMequipment[0].total + dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaMequipment[1].total +dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaMequipment[2].total "
+
+                                       ng-model="dmfDaMequipment.total" name="textinput" type="text"
+                                       placeholder=""
+                                       class="form-control input-md">
+                                </td>
+
+
+                            </tr>
+
+                            <tr height="20" class="trheadc">
+                                <td width="264" height="20">
+                                    Other Assets
+                                </td>
+                                <td width="98">
+                                </td>
+                                <td width="98">
+                                </td>
+                                <td width="98">
+                                </td>
+                                <td width="98">
+                                </td>
+                                <td width="98">
+                                </td>
+                                <td width="98">
+                                </td>
+                                <td width="98">
+                                </td>
+                                <td width="98">
+                                </td>
+                            </tr>
+                            <tr ng-repeat="dmfDaOassets in dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaOassets"
+                                height="20">
+                                <td ng-bind="dmfDaOassets.asset" ng-if="dmfDaOassets.asset=='VALUE OF DESTROYED ASSETS'"
+                                    width="264" height="20" class="boldash">
+
+                                </td>
+                                <td ng-bind="dmfDaOassets.asset" ng-if="dmfDaOassets.asset!='VALUE OF DESTROYED ASSETS'"
+                                    width="264" height="20" class="tdpa">
+
+                                </td>
+                                <td ng-repeat="(key, value) in dmfDaOassets" ng-if="$index > 0 && $index < 8 && dmfDaOassets.asset!='Value of Destroyed Other Assets' && dmfDaOassets.asset!='VALUE OF DESTROYED ASSETS'" width="98">
+                                    <input id="textinput" ng-model="dmfDaOassets[key]" name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md">
+                                </td>
+                                             <td ng-if="dmfDaOassets.asset=='Computers' " width="98">
+                                    <input id="textinput" ng-model="dmfDaOassets.total"
+                                           ng-value="dmfDaOassets.total=dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaOassets[0].base_hospital + dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaOassets[0].divisional_hospital + dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaOassets[0].rural_hospital + dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaOassets[0].central_dispensary + dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaOassets[0].pmcus + dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaOassets[0].phccs + dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaOassets[0].mchcs "
+                                           name="textinput" type="text"
+                                           placeholder=""
+                                           class="form-control input-md">
+                                </td>
+                                <td ng-if="dmfDaOassets.asset=='Vehicles' " width="98">
+                                    <input id="textinput" ng-model="dmfDaMequipment.total"
+                                           ng-value="dmfDaMequipment.total=dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaOassets[1].base_hospital + dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaOassets[1].divisional_hospital + dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaOassets[1].rural_hospital + dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaOassets[1].central_dispensary + dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaOassets[1].pmcus + dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaOassets[1].phccs + dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaOassets[1].mchcs "
+                                           name="textinput" type="text"
+                                           placeholder=""
+                                           class="form-control input-md">
+                                </td>
+                                <td ng-if="dmfDaOassets.asset=='Furniture' " width="98">
+                                    <input id="textinput" ng-model="dmfDaMequipment.total"
+                                           ng-value="dmfDaOassets.total=dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaOassets[2].base_hospital + dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaOassets[2].divisional_hospital + dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaOassets[2].rural_hospital + dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaOassets[2].central_dispensary + dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaOassets[2].pmcus + dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaOassets[2].phccs + dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaOassets[2].mchcs "
+                                           name="textinput" type="text"
+                                           placeholder=""
+                                           class="form-control input-md">
+                                </td>
+                                <td ng-if="dmfDaOassets.asset=='Other Equipment (Specify)' " width="98">
+                                    <input id="textinput" ng-model="dmfDaOassets.total"
+                                           ng-value="dmfDaOassets.total=dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaOassets[3].base_hospital + dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaOassets[3].divisional_hospital + dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaOassets[3].rural_hospital + dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaOassets[3].central_dispensary + dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaOassets[3].pmcus + dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaOassets[3].phccs + dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaOassets[3].mchcs "
+                                           name="textinput" type="text"
+                                           placeholder=""
+                                           class="form-control input-md">
+                                </td>
+                                <td ng-if="dmfDaOassets.asset=='Office Equipment' " width="98">
+                                    <input id="textinput" ng-model="dmfDaOassets.total"
+                                           ng-value="dmfDaOassets.total=dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaOassets[4].base_hospital + dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaOassets[4].divisional_hospital + dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaOassets[4].rural_hospital + dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaOassets[4].central_dispensary + dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaOassets[4].pmcus + dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaOassets[4].phccs + dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaOassets[4].mchcs "
+                                           name="textinput" type="text"
+                                           placeholder=""
+                                           class="form-control input-md">
+                                </td>
+                                <td ng-if="dmfDaOassets.asset=='Others' " width="98">
+                                    <input id="textinput" ng-model="dmfDaOassets.total"
+                                           ng-value="dmfDaOassets.total=dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaOassets[5].base_hospital + dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaOassets[5].divisional_hospital + dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaOassets[5].rural_hospital + dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaOassets[5].central_dispensary + dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaOassets[5].pmcus + dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaOassets[5].phccs + dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaOassets[5].mchcs "
+                                           name="textinput" type="text"
+                                           placeholder=""
+                                           class="form-control input-md">
+                                </td>
+
+                                <!--Table 6 tab 2 -->
+
+                                <!--td ng-repeat="(key, value) in dmfDaOassets"
+                                    ng-if="$index >0 && dmfDaOassets.asset == '	Value of Destroyed Other Assets'"
+                                    width="98">
+
+                                    <input id="text" ng-if="key=='base_hospital'"
+                                           ng-value="dmfDaOassets.base_hospital=dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaOassets[0].base_hospital + dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfDaOassets[1].base_hospital"
+
+                                           ng-model="dmfDaOassets.base_hospital" name="textinput" type="text"
+                                           placeholder=""
+                                           class="form-control input-md">
+
+                                </td-->
+
+
+                            </tr>
+
+
+                            </tbody>
+                        </table>
+
+                        <br>
+                        <a href="#step3" class="btn btn-sm btn-info pull-right" data-toggle="tab"><span
+                                class="glyphicon glyphicon-arrow-right"></span> Fill Partially Damaged Facilities and
+                            Assets Informations</a>
+
+                    </div>
+                </div>
+
+                <div class="tab-pane" id="step3">
+                    <table class="table table-bordered" style="width:100%;background:#E4E5E6;">
+                        <colgroup>
+                            <col width="264"/>
+                            <col width="98" span="8"/>
+                        </colgroup>
+                        <tbody>
+
+                        <tr height="20" class="trheadc">
+                            <td width="264" height="20">
+                            </td>
+                            <td colspan="7" width="686" style="text-align:center;">
+                                Type of Facility
+                            </td>
+                            <td width="98">
+                            </td>
+                        </tr>
+                        <tr height="34" class="trsubc">
+                            <td width="264" height="34" class="trheadc">
+                            </td>
+                            <td width="98">
+                                Base Hospital
+                            </td>
+                            <td width="98">
+                                Divisional Hospital
+                            </td>
+                            <td width="98">
+                                Rural Hospital
+                            </td>
+                            <td width="98">
+                                Central Dispensary
+                            </td>
+                            <td width="98">
+                                PMCUs
+                            </td>
+                            <td width="98">
+                                PHCCs
+                            </td>
+                            <td width="98">
+                                MCHCs
+                            </td>
+                            <td width="98">
+                                Total Number
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div style="height:400px;overflow:auto;">
+                        <table class="table table-bordered">
+                            <tr ng-repeat="dmfPdfaNum in dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfPdfaNum"
+                                height="20">
+
+                                <td ng-bind="dmfPdfaNum.num_pdamaged_facilities" width="264" height="20" class="tdpa">
+
+                                </td>
+                                <td ng-repeat="(key, value) in dmfPdfaNum" ng-if="$index > 0" width="98">
+                                    <input id="textinput" ng-model="dmfPdfaNum[key]" name="textinput" type="text"
+                                           placeholder=""
+                                           class="form-control input-md">
+                                </td>
+
+                            </tr>
+                            <tr height="20" class="trheadc">
+                                <td width="264" height="20">
+                                    Number of Patients Affected
+                                </td>
+                                <td width="98">
+                                </td>
+                                <td width="98">
+                                </td>
+                                <td width="98">
+                                </td>
+                                <td width="98">
+                                </td>
+                                <td width="98">
+                                </td>
+                                <td width="98">
+                                </td>
+                                <td width="98">
+                                </td>
+                                <td width="98">
+                                </td>
+                            </tr>
+                            <tr ng-repeat="dmfPdfaPaf in dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfPdfaPaf"
+                                height="20">
+
+                                <td ng-bind="dmfPdfaPaf.num_patients_affected" width="264" height="20" class="tdpa">
+
+                                </td>
+                                <td ng-repeat="(key, value) in dmfPdfaPaf" ng-if="$index > 0" width="98">
+                                    <input id="textinput" ng-model="dmfPdfaPaf[key]" name="textinput" type="text"
+                                           placeholder=""
+                                           class="form-control input-md">
+                                </td>
+
+                            </tr>
+                            </tbody>
+                        </table>
+
+
+                        <br>
+                        <a href="#step4" class="btn btn-sm btn-info pull-right" data-toggle="tab"><span
+                                class="glyphicon glyphicon-arrow-right"></span> Fill No of Partially Damaged Assets
+                            Informations</a>
+
+                    </div>
+                </div>
+
+                <div class="tab-pane" id="step4">
+                    <table class="table table-bordered" style="width:98.3%;background:#E4E5E6;">
+                        <colgroup>
+                            <col width="264"/>
+                            <col width="98" span="8"/>
+                        </colgroup>
+                        <tbody>
+
+                        <tr height="20" class="trheadc">
+                            <td width="270" height="20">
+                            </td>
+                            <td colspan="7" width="686" style="text-align:center;">
+                                Type of Facility
+                            </td>
+                            <td rowspan="2" width="98">
+                                Total Damages (LKR)
+                            </td>
+                        </tr>
+                        <tr height="34" class="trsubc">
+                            <td width="264" height="34" class="trhead" style="text-align:left;">
+                                Assets
+                            </td>
+                            <td width="98">
+                                Base Hospital
+                            </td>
+                            <td width="98">
+                                Divisional Hospital
+                            </td>
+                            <td width="98">
+                                Rural Hospital
+                            </td>
+                            <td width="98">
+                                Central Dispensary
+                            </td>
+                            <td width="98">
+                                PMCUs
+                            </td>
+                            <td width="98">
+                                PHCCs
+                            </td>
+                            <td width="98">
+                                MCHCs
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div style="height:400px;overflow:auto;">
+                        <table class="table table-bordered">
+                            <tbody>
+                            <tr height="20" class="trheadc">
+                                <td width="264" height="20">
+                                    Structure (in sqm)
+                                </td>
+                                <td width="98">
+                                </td>
+                                <td width="98">
+                                </td>
+                                <td width="98">
+                                </td>
+                                <td width="98">
+                                </td>
+                                <td width="98">
+                                </td>
+                                <td width="98">
+                                </td>
+                                <td width="98">
+                                </td>
+                                <td width="98">
+                                </td>
+                            </tr>
+                            <tr ng-repeat="dmfPdaStructure in dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfPdaStructure"
+                                height="20">
+
+                                <td ng-bind="dmfPdaStructure.asset" width="264" height="20" class="tdpa">
+
+                                </td>
+                                <td ng-repeat="(key, value) in dmfPdaStructure" ng-if="$index > 0" width="98">
+                                    <input id="textinput" ng-model="dmfPdaStructure[key]" name="textinput" type="text"
+                                           placeholder=""
+                                           class="form-control input-md">
+                                </td>
+
+                            </tr>
+
+                            <tr height="20" class="trheadc">
+                                <td width="264" height="20">
+                                    Medical Equipment
+                                </td>
+                                <td width="98">
+                                </td>
+                                <td width="98">
+                                </td>
+                                <td width="98">
+                                </td>
+                                <td width="98">
+                                </td>
+                                <td width="98">
+                                </td>
+                                <td width="98">
+                                </td>
+                                <td width="98">
+                                </td>
+                                <td width="98">
+                                </td>
+                            </tr>
+                            <tr ng-repeat="dmfPdaMequipment in dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfPdaMequipment"
+                                height="20">
+                                <td ng-bind="dmfPdaMequipment.asset"
+                                    ng-if="dmfPdaMequipment.asset=='Value of Partially Damaged Medical Equipment'"
+                                    width="264" height="20" class="boldash">
+
+                                </td>
+                                <td ng-bind="dmfPdaMequipment.asset"
+                                    ng-if="dmfPdaMequipment.asset!='Value of Partially Damaged Medical Equipment'"
+                                    width="264" height="20" class="tdpa">
+
+                                </td>
+                                <td ng-repeat="(key, value) in dmfPdaMequipment" ng-if="$index > 0" width="98">
+                                    <input id="textinput" ng-model="dmfPdaMequipment[key]" name="textinput" type="text"
+                                           placeholder=""
+                                           class="form-control input-md">
+                                </td>
+
+                            </tr>
+
+
+                            <tr height="20" class="trheadc">
+                                <td width="264" height="20">
+                                    Other Assets
+                                </td>
+                                <td width="98">
+                                </td>
+                                <td width="98">
+                                </td>
+                                <td width="98">
+                                </td>
+                                <td width="98">
+                                </td>
+                                <td width="98">
+                                </td>
+                                <td width="98">
+                                </td>
+                                <td width="98">
+                                </td>
+                                <td width="98">
+                                </td>
+
+                            </tr>
+                            <tr ng-repeat="dmfPdaOassets in dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfPdaOassets"
+                                height="20">
+
+                                <td ng-bind="dmfPdaOassets.asset"
+                                    ng-if="dmfPdaOassets.asset=='Value of Partially Damaged Other Assets' || dmfPdaOassets.asset=='VALUE OF PARTIALLY DAMAGED ASSETS' && dmfPdaOassets.asset=='TOTAL VALUE OF DAMAGES'"
+                                    width="264" height="20" class="boldash">
+
+                                </td>
+                                <td ng-bind="dmfPdaOassets.asset"
+                                    ng-if="dmfPdaOassets.asset!='Value of Partially Damaged Other Assets' && dmfPdaOassets.asset!='VALUE OF PARTIALLY DAMAGED ASSETS' || dmfPdaOassets.asset!='TOTAL VALUE OF DAMAGES'"
+                                    width="264" height="20" class="tdpa">
+
+                                </td>
+                                <td ng-repeat="(key, value) in dmfPdaOassets" ng-if="$index > 0" width="98">
+                                    <input id="textinput" ng-model="dmfPdaOassets[key]" name="textinput" type="text"
+                                           placeholder=""
+                                           class="form-control input-md">
+                                </td>
+
+                            </tr>
+                            </tbody>
+                        </table>
+
+
+                        <br>
+                        <a href="#step5" class="btn btn-sm btn-info pull-right" data-toggle="tab"><span
+                                class="glyphicon glyphicon-arrow-right"></span> Fill Losses Informations</a>
+
+                    </div>
+                </div>
+
+                <div class="tab-pane" id="step5">
+                    <table class="table table-bordered" style="width:98.3%;">
+                        <colgroup>
+                            <col width="264"/>
+                            <col width="98" span="8"/>
+                        </colgroup>
+                        <tbody>
+
+                        <tr height="20" class="trheadc">
+                            <td rowspan="2" width="264" height="54" style="text-align:left;padding-left:5px;">
+                                Types of Losses
+                            </td>
+                            <td colspan="7" width="686" style="text-align:center;">
+                                Type of Facility
+                            </td>
+                            <td rowspan="2" width="98">
+                                Total Losses (LKR)
+                            </td>
+                        </tr>
+                        <tr height="34" class="trsubc">
+                            <td width="98" height="34">
+                                Base Hospital
+                            </td>
+                            <td width="98">
+                                Divisional Hospital
+                            </td>
+                            <td width="98">
+                                Rural Hospital
+                            </td>
+                            <td width="98">
+                                Central Dispensary
+                            </td>
+                            <td width="98">
+                                PMCUs
+                            </td>
+                            <td width="98">
+                                PHCCs
+                            </td>
+                            <td width="98">
+                                MCHCs
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                    <div style="height:400px;overflow:auto;">
+                        <table class="table table-bordered">
+                            <tr height="20" class="trheadc">
+                                <td width="264" height="20">
+                                    Foregone Income
+                                </td>
+                                <td width="98">
+                                </td>
+                                <td width="98">
+                                </td>
+                                <td width="98">
+                                </td>
+                                <td width="98">
+                                </td>
+                                <td width="98">
+                                </td>
+                                <td width="98">
+                                </td>
+                                <td width="98">
+                                </td>
+                                <td width="98">
+                                </td>
+                            </tr>
+                            <tr ng-repeat="dmfLosFi in dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfLosFi"
+                                height="20">
+
+                                <td ng-bind="dmfLosFi.type_of_losses" width="264" height="20" class="tdpa">
+
+                                </td>
+                                <td ng-repeat="(key, value) in dmfLosFi" ng-if="$index > 0" width="98">
+                                    <input id="textinput" ng-model="dmfLosFi[key]" name="textinput" type="text"
+                                           placeholder=""
+                                           class="form-control input-md">
+                                </td>
+
+                            </tr>
+
+                            <tr height="20" class="trheadc">
+                                <td width="264" height="20">
+                                    Cleaning Up of Debris
+                                </td>
+                                <td width="98">
+                                </td>
+                                <td width="98">
+                                </td>
+                                <td width="98">
+                                </td>
+                                <td width="98">
+                                </td>
+                                <td width="98">
+                                </td>
+                                <td width="98">
+                                </td>
+                                <td width="98">
+                                </td>
+                                <td width="98">
+                                </td>
+                            </tr>
+                            <tr ng-repeat="dmfLosCud in dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfLosCud"
+                                height="20">
+
+                                <td ng-bind="dmfLosCud.type_of_losses" ng-if="dmfLosCud.type_of_losses=='Total'"
+                                    width="264" height="20" class="boldash">
+
+                                </td>
+                                <td ng-bind="dmfLosCud.type_of_losses" ng-if="dmfLosCud.type_of_losses!='Total'"
+                                    width="264" height="20" class="tdpa">
+
+                                </td>
+                                <td ng-repeat="(key, value) in dmfLosCud" ng-if="$index > 0" width="98">
+                                    <input id="textinput" ng-model="dmfLosCud[key]" name="textinput" type="text"
+                                           placeholder=""
+                                           class="form-control input-md">
+                                </td>
+
+                            </tr>
+
+                            <tr height="20" class="trheadc">
+                                <td width="264" height="20">
+                                    Higher Operating Costs
+                                </td>
+                                <td width="98">
+                                </td>
+                                <td width="98">
+                                </td>
+                                <td width="98">
+                                </td>
+                                <td width="98">
+                                </td>
+                                <td width="98">
+                                </td>
+                                <td width="98">
+                                </td>
+                                <td width="98">
+                                </td>
+                                <td width="98">
+                                </td>
+                            </tr>
+                            <tr ng-repeat="dmfLosHoc in dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfLosHoc"
+                                height="20">
+
+                                <td ng-bind="dmfLosHoc.type_of_losses" ng-if="dmfLosHoc.type_of_losses=='Total'"
+                                    width="264" height="20" class="boldash">
+
+                                </td>
+                                <td ng-bind="dmfLosHoc.type_of_losses" ng-if="dmfLosHoc.type_of_losses!='Total'"
+                                    width="264" height="20" class="tdpa">
+
+                                </td>
+                                <td ng-repeat="(key, value) in dmfLosHoc" ng-if="$index > 0" width="98">
+                                    <input id="textinput" ng-model="dmfLosHoc[key]" name="textinput" type="text"
+                                           placeholder=""
+                                           class="form-control input-md">
+                                </td>
+
+                            </tr>
+
+                            <tr height="20" class="trheadc">
+                                <td width="264" height="20">
+                                    Other Unexpected Expenses
+                                </td>
+                                <td width="98">
+                                </td>
+                                <td width="98">
+                                </td>
+                                <td width="98">
+                                </td>
+                                <td width="98">
+                                </td>
+                                <td width="98">
+                                </td>
+                                <td width="98">
+                                </td>
+                                <td width="98">
+                                </td>
+                                <td width="98">
+                                </td>
+                            </tr>
+                            <tr ng-repeat="dmfLosOue in dlDataHealthDamagelostOtherMedicalFacilities.Table_6.DmfLosOue"
+                                height="20">
+
+                                <td ng-bind="dmfLosOue.type_of_losses"
+                                    ng-if="dmfLosOue.type_of_losses=='Total' || dmfLosOue.type_of_losses=='TOTAL VALUE OF LOSSES'"
+                                    width="264" height="20" class="boldash">
+
+                                </td>
+                                <td ng-bind="dmfLosOue.type_of_losses"
+                                    ng-if="dmfLosOue.type_of_losses!='Total' && dmfLosOue.type_of_losses!='TOTAL VALUE OF LOSSES'"
+                                    width="264" height="20" class="tdpa">
+
+                                </td>
+                                <td ng-repeat="(key, value) in dmfLosOue" ng-if="$index > 0" width="98">
+                                    <input id="textinput" ng-model="dmfLosOue[key]" name="textinput" type="text"
+                                           placeholder=""
+                                           class="form-control input-md">
+                                </td>
+
+                            </tr>
+
+                            </tbody>
+                        </table>
+                        <div class="pull-right">
+                            <br>
+                            <button type="button" class="btn btn-info">Clear</button>
+                            <button type="button" class="btn btn-success" ng-click="SaveData()">Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <br>
+
+        </div>
+        <!-- /.conainer-fluid -->
+</main>
+{% endblock content %}
